@@ -79,7 +79,7 @@ namespace BinaryTree
         //Solution from: https://www.baeldung.com/cs/binary-tree-height#:~:text=The%20height%20of%20a%20binary%20tree%20is%20the%20height%20of,the%20depth%20of%20the%20tree.
         public int FindHeight(Node<int> root) 
         {
-            if (this.root == null)
+            if (root == null)
             {
                 return 0;
             }
@@ -87,6 +87,32 @@ namespace BinaryTree
             int LeftHeight = FindHeight(root.left);
             int RightHeight = FindHeight(root.right);
             return Math.Max(LeftHeight, RightHeight) + 1;
+        }
+
+        public int FindSize(Node<int> root)
+        {
+            if (root == null)
+            {
+                return 0;
+            }
+            int LeftSize = FindSize(root.left);
+            int RightSize = FindSize(root.right);
+            return 1 + LeftSize + RightSize;
+        }
+
+        public int FindLevel(Node<int> root)
+        {
+            if (root == null){
+                return 0;
+            }
+            if (root.right == null && root.left == null)
+            {
+                return 0;
+            }
+            int LeftRoot = FindLevel(root.left);
+            int RightRoot = FindLevel(root.right);
+            return Math.Max(LeftRoot, RightRoot) + 1;
+
         }
     }
 
