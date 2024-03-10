@@ -11,9 +11,8 @@
             Console.WriteLine(BST.search(1, BST.root));
             Console.ReadLine();
 
-            BST.Delete(0, BST.root);
 
-            Console.WriteLine(BST.ExistsId(0, BST.root));
+            Console.WriteLine(BST.FindLevel(BST.root));
             Console.ReadLine();
         }
     }
