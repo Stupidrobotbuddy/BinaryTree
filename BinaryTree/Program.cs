@@ -5,12 +5,13 @@
         private static void Main(string[] args)
         {
             Tree BST = new();
-            BST.replace(1, null);
-            BST.Insert(4, BST.root);
+            BST.Insert(4);
 
-            Console.WriteLine(BST.search(1, BST.root));
+            Console.WriteLine(BST.search(1));
             Console.ReadLine();
 
+            BST.Insert(5);
+            BST.Insert(5);
 
             Console.WriteLine(BST.FindLevel(BST.root));
             Console.ReadLine();
