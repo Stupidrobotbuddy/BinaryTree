@@ -4,76 +4,58 @@ namespace BinaryTree
 {
     internal class Tree
     {
-        public Node<int>? root;
+        internal Node<int>? root;
+        internal Dictionary<uint, Node<int>> NodeList = new Dictionary<uint, Node<int>>();
         
 
-        public void replace(int value, Node<int> _node)
+        public void replace(int value, uint Id)
         {
-            if (root == null)
+            if (!ExistsId(Id))
             {
-                root = new Node<int>(value, 0);
+                return;
             }
-            else
-            {
-                _node.data = value;
-            }
+
+            NodeList[Id].data = value;
         }
 
-        public void Insert(int value, Node<int> _node)
+        public void Insert(int value)
         {
             HelperMethods<int> helper = new();
+            if (root == null)
+            {
+                root = new Node<int>(value);
+                NodeList.Add(root.Id, root);
+                return;
+            }
 
-            helper.insertion(value, _node);
+            helper.insertion(value, root);
         }
 
         public void Insert(Node<int> NodeToBeInserted, Node<int> StartingPoint)
         {
             HelperMethods<int> helper = new();
+            if (root == null)
+            {
+                root = NodeToBeInserted;
+                return;
+            }
 
             helper.insertion(NodeToBeInserted, StartingPoint);
         }
 
-        public int search(uint IdToSearch, Node<int> node)
+        public int search(uint IdToSearch)
         {
-            HelperMethods<int> helper = new HelperMethods<int>();
-            if (node is null || !ExistsId(IdToSearch, root))
-            {
-                return -1;
-            }
-
-            return helper._Search(IdToSearch, node, this).data;
-
-            
+            return NodeList[IdToSearch].data;
         }
 
         public Node<int> searchNode(uint IdToSearch, Node<int> node)
         {
-            HelperMethods<int> helper = new HelperMethods<int>();
-            if (node == null || !ExistsId(IdToSearch, root))
-            {
-                return null;
-            }
-
-            return helper._Search(IdToSearch, node, this);
+            return NodeList[IdToSearch];
         }
 
-        public bool ExistsId(uint IdToSearch, Node<int> node)
+        public bool ExistsId(uint IdToSearch)
         {
-            if (node is null)
-            {
-                return false;
-            }
-
-            if (node.Id == IdToSearch)
-            {
-                return true;
-            }
-            else if (node.right is not null)
-            {
-                return ExistsId(IdToSearch, node.right);
-            }
-
-            return ExistsId(IdToSearch, node.left);
+            return NodeList.ContainsKey(IdToSearch);
         }
 
         //Solution from: https://www.baeldung.com/cs/binary-tree-height#:~:text=The%20height%20of%20a%20binary%20tree%20is%20the%20height%20of,the%20depth%20of%20the%20tree.
@@ -118,26 +100,6 @@ namespace BinaryTree
 
     internal class HelperMethods<T>
     {
-        internal Node<T> _Search(uint Id, Node<T> node, Tree tree)
-        {
-            if (node is null || !tree.ExistsId(Id, tree.root))
-            {
-                return null;
-            }
-
-            if (Id == node.Id)
-            {
-                return node;
-            }
-
-            Node<T> result = _Search(Id, node.left, tree);
-            if (result is not null)
-            {
-                return result;
-            }
-
-            return _Search(Id, node.right, tree);
-        }
 
         internal void insertion(int value, Node<int> _node)
         {
@@ -146,6 +108,7 @@ namespace BinaryTree
                 if (_node.left is null)
                 {
                     _node.left = new Node<int>(value);
+                    Tree.NodeList.Add(_node.left.Id, _node.left);
                     _node.left.parent = _node;
                 }
                 else
@@ -158,6 +121,7 @@ namespace BinaryTree
                 if (_node.right is null)
                 {
                     _node.right = new Node<int>(value);
+                    Tree.NodeList.Add(_node.right.Id, _node.right);
                     _node.right.parent = _node;
                 }
                 else
@@ -176,6 +140,7 @@ namespace BinaryTree
                 if (_node.left is null)
                 {
                     _node.left = NodeToBeInserted;
+                    Tree.NodeList.Add(_node.left.Id, _node.left);
                     NodeToBeInserted.parent = _node;
                 }
                 else
@@ -189,6 +154,7 @@ namespace BinaryTree
                 if (_node.right is null)
                 {
                     _node.right = NodeToBeInserted;
+                    Tree.NodeList.Add(_node.right.Id, _node.right);
                     NodeToBeInserted.parent = _node;
                 }
                 else

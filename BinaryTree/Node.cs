@@ -6,7 +6,7 @@
 
         public uint Id { get; }
         public T data;
-        public Node<T> parent;
+        public Node<T>? parent;
         public Node<T>? right;
         public Node<T>? left;
 
@@ -21,7 +21,7 @@
 
         public Node(T _data, uint Id)
         {
-            Id = Id;
+            this.Id = Id;
             data = _data;
             parent = null;
             right = null;
